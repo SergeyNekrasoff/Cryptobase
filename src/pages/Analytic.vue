@@ -1,7 +1,6 @@
 <template>
     <div class="analytic-page">
       <div class="container">
-        <Header/>
         <section>
           <p>Analytic</p>
         </section>
@@ -10,15 +9,11 @@
 </template>
 
 <script>
-import Header from '../components/Header.vue'
 
 export default {
-  name: 'home',
-  components: {
-    'Header': Header
-  }
+  name: 'analytic'
 }
 </script>
 
-<style lang="css">
+<style lang="scss" scoped>
 </style>

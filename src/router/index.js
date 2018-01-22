@@ -4,7 +4,6 @@ import Home from '@/pages/Home'
 import Analytic from '@/pages/Analytic'
 import News from '@/pages/News'
 import Market from '@/pages/Market'
-import Admin from '@/pages/Admin'
 
 Vue.use(Router)
 
@@ -25,11 +24,6 @@ export default new Router({
     {
       path: '/market',
       component: Market
-    },
-    {
-      path: '/admin/:id',
-      component: Admin
-
     }
   ]
 })

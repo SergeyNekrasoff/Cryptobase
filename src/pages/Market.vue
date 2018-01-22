@@ -1,7 +1,6 @@
 <template>
     <div class="market-page">
       <div class="container">
-        <Header/>
         <section>
           <p>Market</p>
         </section>
@@ -10,13 +9,9 @@
 </template>
 
 <script>
-import Header from '../components/Header.vue'
 
 export default {
-  name: 'home',
-  components: {
-    'Header': Header
-  }
+  name: 'market'
 }
 </script>
 
