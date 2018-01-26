@@ -7,14 +7,32 @@
             much the sum of all coins is collectively worth), and gives you an easy
             way to compare cryptocurrency performance and rank over the last week.</p>
         </div>
+        <div class="home__table">
+          <!-- <Table/> -->
+
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+// import Table from '../components/Tablecompare.vue'
 export default {
   name: 'home'
+  // coponents: [
+  //   Table
+  // ]
+  // data () {
+  //   return {
+  //     coins: []
+  //   }
+  // },
+  // methods: {
+  //   getColor: (num) => {
+  //     return num > 0 ? 'color:green;' : 'color:red'
+  //   }
+  // }
 }
 </script>
 
