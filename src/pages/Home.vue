@@ -1,18 +1,12 @@
 <template>
-  <div class="home home-page">
-    <div class="container">
-      <div class="row">
-        <div class="home__intro col-lg-12 col-md-12 col-sm-12 col-xs-12">
-          <p class="home__text">This website indexes the top 10 cryptocurrencies by market cap (how
-            much the sum of all coins is collectively worth), and gives you an easy
-            way to compare cryptocurrency performance and rank over the last week.</p>
-        </div>
-        <div class="home__table">
-          <!-- <Table/> -->
-
-        </div>
+  <div class="home default-page">
+    <sui-container fluid>
+  		<sui-divider fitted/>
+      <div class="home__present">
+        <em class="default-page__small">Cryptobase индексирует 10 лучших криптовалют по рыночной капитализации и дает вам простой способ сравнить производительность и рейтинг криптовалют за последнюю неделю.</em>
       </div>
-    </div>
+      <sui-divider fitted/>
+    </sui-container>
   </div>
 </template>
 
@@ -38,6 +32,12 @@ export default {
 
 <style lang="scss" scoped>
 .home {
+
+  &__present {
+    padding: 16px;
+    text-align: center;
+  }
+
   &__intro {
     padding: 24px 0;
   }

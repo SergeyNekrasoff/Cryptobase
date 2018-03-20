@@ -35,7 +35,6 @@
 
 <script>
 import axios from 'axios'
-import Vue2Filters from 'vue2-filters'
 
 // The API we're using for grabbing metadata about each cryptocurrency
 // (including logo images). The service can be found at:
@@ -66,24 +65,24 @@ export default {
         .catch((err) => {
           console.error(err)
         })
-    }
+    },
     // Load up all cryptocurrency data
-    // getCoinData: function () {
-    //   axios.get('https://www.cryptocompare.com/api/data/coinlist')
-    //     .then((resp) => {
-    //       this.coinData = resp.data.Data
-    //       this.getCoins()
-    //       console.log(`resp getCoinData: ${JSON.stringify(this.coinData)}`)
-    //     })
-    //     .catch((err) => {
-    //       this.getCoins()
-    //       console.error(err)
-    //     })
-    // },
+    getCoinData: function () {
+      axios.get('https://www.cryptocompare.com/api/data/coinlist')
+        .then((resp) => {
+          this.coinData = resp.data.Data
+          this.getCoins()
+          console.log(`resp getCoinData: ${JSON.stringify(this.coinData)}`)
+        })
+        .catch((err) => {
+          this.getCoins()
+          console.error(err)
+        })
+    },
     // Given a cryptocurrency ticket symbol
-    // getCoinImage: function (symbol) {
-    //   return 'https://www.cryptocompare.com' + this.coinData[Symbol].ImgaeUrl
-    // },
+    getCoinImage: function (symbol) {
+      return 'https://www.cryptocompare.com' + this.coinData[Symbol].ImgaeUrl
+    },
   },
   created: function () {
     // this.getCoinData()

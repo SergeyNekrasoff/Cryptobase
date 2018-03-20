@@ -1,0 +1,21 @@
+// fonts
+@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500');
+
+
+// general styles
+p {
+  -moz-hyphens: auto;
+  -webkit-hyphens: auto;
+  -ms-hyphens: auto;
+  hyphens: auto;
+  margin: 0;
+}
+
+.default-page {
+
+  &__small {
+    font-size: 12px;
+    font-weight: 300;
+    font-style: normal;
+  }
+}
