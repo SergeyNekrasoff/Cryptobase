@@ -1,33 +1,35 @@
 <template>
-  <table class="table table-hover">
+  <table class="ui selectable inverted basic black table">
    <thead>
      <tr>
        <td>Rank</td>
-       <!-- <td>Name</td> -->
-       <td>Symbol</td>
+       <td class="center aligned">Symbol</td>
+       <td>Name</td>
        <td>Price (USD)</td>
-       <!-- <td>1H</td>
-       <td>1D</td>
-       <td>1W</td>
-       <td>Market Cap (USD)</td> -->
+       <td>1H</td>
+       <td>24H</td>
+       <td>MKT Cap (USD)</td>
+       <td>Total Supply</td>
+       <td>Last 7 Days</td>
      </tr>
    </thead>
    <tbody>
-     <tr v-for="coin in coins" :key="coin.id">
+     <tr v-cloak v-for="coin in coins">
        <td>{{ coin.rank }}</td>
-       <!-- <td><img v-bind:src="getCoinImage(coin.symbol)"/> {{ coin.name }}</td> -->
-       <td>{{ coin.symbol }}</td>
+       <td class="center aligned"><img v-bind:src="getCoinImage(coin.symbol)"></td>
+       <td>{{ coin.name }}</td>
        <td>{{ coin.price_usd | currency }}</td>
-       <!-- <td v-bind:style.="getColor(coin.percent_change_1h)">
+       <td v-bind:style="getColor(coin.percent_change_1h)">
          <span v-if="coin.percent_change_1h > 0">+</span>{{ coin.percent_change_1h }}%
        </td>
-       <td v-bind:style.="getColor(coin.percent_change_24h)">
+       <td v-bind:style="getColor(coin.percent_change_24h)">
          <span v-if="coin.percent_change_24h > 0">+</span>{{ coin.percent_change_24h }}%
        </td>
-       <td v-bind:style.="getColor(coin.percent_change_7d)">
+       <td>{{ coin.market_cap_usd | currency }}</td>
+       <td>{{ coin.total_supply}}</td>
+       <td v-bind:style="getColor(coin.percent_change_7d)">
          <span v-if="coin.percent_change_7d > 0">+</span>{{ coin.percent_change_7d }}%
        </td>
-       <td>{{ coin.market_cap_usd | currency }}</td> -->
      </tr>
    </tbody>
   </table>
@@ -36,60 +38,76 @@
 <script>
 import axios from 'axios'
 
-// The API we're using for grabbing metadata about each cryptocurrency
-// (including logo images). The service can be found at:
-// https://www.cryptocompare.com/api/
-// let CRYPTOCOMPARE_API_URI = 'https://www.cryptocompare.com'
+let CRYPTOCOMPARE_API_URI = 'https://min-api.cryptocompare.com';
+let CRYPTOCOMPARE_URI = 'https://www.cryptocompare.com';
 
-// The API we're using for grabbing cryptocurrency prices.  The service can be
-// found at: https://coinmarketcap.com/api/
-// let COINMARKETCAP_API_URI = 'https://api.coinmarketcap.com'
+let COINMARKETCAP_API_URI = 'https://api.coinmarketcap.com';
+
+let UPDATE_INTERVAL = 60 * 1000;
 
 export default {
   name: 'tablecoins',
   data () {
     return {
-      coins: [], // array of cryptocurrencies
+      coins: [], // array of all coins
       coinData: {}, // get crypto logo
       timer: ''
     }
   },
   methods: {
-    // Get the top 10 cryptocurrencies by value
+    /**
+     * Get the top 10 cryptocurrencies by value
+     */
     getCoins: function () {
-      axios.get('https://api.coinmarketcap.com/v1/ticker/?limit=10')
+      axios.get(COINMARKETCAP_API_URI + '/v1/ticker/?limit=10')
         .then((resp) => {
           this.coins = resp.data
-          console.log(`resp getCoins: ${JSON.stringify(resp.data.name)}`)
         })
         .catch((err) => {
           console.error(err)
-        })
+        });
     },
-    // Load up all cryptocurrency data
+    /**
+     * Load up all cryptocurrency data
+     */
     getCoinData: function () {
-      axios.get('https://www.cryptocompare.com/api/data/coinlist')
+      axios.get(CRYPTOCOMPARE_API_URI + '/data/all/coinlist')
         .then((resp) => {
           this.coinData = resp.data.Data
           this.getCoins()
-          console.log(`resp getCoinData: ${JSON.stringify(this.coinData)}`)
         })
         .catch((err) => {
           this.getCoins()
           console.error(err)
-        })
+        });
     },
-    // Given a cryptocurrency ticket symbol
+    /**
+      * Given a cryptocurrency ticket symbol
+      */
     getCoinImage: function (symbol) {
-      return 'https://www.cryptocompare.com' + this.coinData[Symbol].ImgaeUrl
+      symbol = (symbol === 'MIOTA' ? 'IOT' : symbol)
+      symbol = (symbol === 'VERI' ? 'VRM' : symbol)
+
+      return CRYPTOCOMPARE_URI + this.coinData[symbol].ImageUrl
     },
+    /**
+     * Return a CSS color (either red or green) depending on whether or
+     * not the value passed in is negative or positive.
+     */
+    getColor: (num) => {
+      return num > 0 ? "color:lime;" : "color:tomato;"
+    }
   },
   created: function () {
-    // this.getCoinData()
-    this.getCoins()
-    // this.timer = setInterval(this.getCoins, 60000)
+    this.getCoinData()
+  },
+  mounted: function() {
+    setInterval(() => {
+      this.getCoins();
+    }, UPDATE_INTERVAL);
   }
 }
+
 </script>
 
 <style lang="scss" scoped>

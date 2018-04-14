@@ -8,6 +8,7 @@ import Vue2Filters from 'vue2-filters'
 import SuiVue from 'semantic-ui-vue'
 import 'semantic-ui-css/semantic.min.css'
 
+
 // Firebase config - this is provided when you create your app
 // Swap out these settings for your project settings
 const config = {
